@@ -1,0 +1,11 @@
+# download_url: URL to download the AppDynamics installer. Preferably use an internal URL like artifactory.
+# installer_path: Path where the AppDynamics installer will be downloaded.
+# installation_directory: Directory where AppDynamics will be installed.
+# appd_username: Username for AppDynamics authentication.
+# appd_password: Password for AppDynamics authentication.
+# appd_license_key: License key for AppDynamics.
+download_url: "https://download.appdynamics.com/path/to/appdynamics/installer" #use artifactory or any other internal url
+installer_path: "/tmp/appdynamics_installer.sh"
+installation_directory: "/opt/appdynamics"
+appd_username: "{{ lookup('env', 'APPD_USERNAME') }}" #use it as env variable
+appd_license_key: "{{ lookup('env', 'APPD_LICENSE_KEY') }}" #use it as env variable, if it is needed in internal app

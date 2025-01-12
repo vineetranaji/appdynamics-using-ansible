@@ -1,0 +1,16 @@
+# This Ansible playbook is designed to install AppDynamics on all hosts.
+# It uses the 'appd' role to perform the installation.
+# The playbook requires elevated privileges (become: yes) to execute the tasks.
+# The main task ensures that the AppDynamics role is included and executed.
+---
+- name: Install AppDynamics
+  hosts: all
+  become: yes
+  roles:
+    - appd
+
+  tasks:
+    - name: Ensure AppDynamics is installed
+      include_role:
+        name: appd
+---

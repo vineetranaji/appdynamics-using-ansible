@@ -1,0 +1,33 @@
+# This Ansible playbook performs the following tasks:
+# 1. Downloads the AppDynamics installation package from a specified URL.
+# 2. Unzips the downloaded AppDynamics package to the /opt/AppDynamics directory.
+# 3. Installs AppDynamics by running the install.sh script located in the /opt/AppDynamics directory.
+# 4. Cleans up by removing the downloaded AppDynamics zip file from the /tmp directory.
+---
+- name: Download AppDynamics installation package
+  get_url:
+    url: "{{ appd_download_url }}" #use artifactory link
+    dest: "/tmp/AppDynamics.zip"
+
+- name: Unzip AppDynamics package
+  unarchive:
+    src: "/tmp/AppDynamics.zip"
+    dest: "/opt/AppDynamics"
+    remote_src: yes
+
+- name: Install AppDynamics
+  command: "/opt/AppDynamics/install.sh"
+  args:
+    chdir: "/opt/AppDynamics"
+
+- name: Clean up installation files
+  file:
+    path: "/tmp/AppDynamics.zip"
+    state: absent
+
+- name: Start AppDynamics service
+  service:
+    name: appdynamics
+    state: started
+    enabled: yes
+---
